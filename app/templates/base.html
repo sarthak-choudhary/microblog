@@ -1,0 +1,35 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Microblog </title>
+        {% else %}
+        <title>Welcome to Microblog!</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            Microblog: 
+            <a href="{{ url_for('index') }}">HOME</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">LOGIN</a>
+            {% else %}
+            <a href="{{ url_for('user',username=current_user.username) }}">PROFILE</a>
+            <a href="{{ url_for('explore') }}">Explore</a>
+            <a href="{{ url_for('logout') }}">LOGOUT</a>
+            {% endif %}
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        <!-- get_flashed_messages return list of all messages registered with flash() -->
+        <!-- messages appear only once after they are registered with flash -->
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1> SIGN IN </h1>
+    <form action="" method ="POST" novalidate>
+        <!-- action attribute is used to tell the browser the URL that should be used when submitted the information -->
+        <!-- when empty submitted to URL that rendered the form -->
+        {{ form.hidden_tag() }}
+        <!-- generates hidden field tha includes a token that is used to protect the form against CSRF attack -->
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <p> NEW USER?<a href="{{ url_for('register')}}">Click To Register!</a></p>
+{% endblock %}
+<!-- there is no html field because fields in form objects know how to render  -->
